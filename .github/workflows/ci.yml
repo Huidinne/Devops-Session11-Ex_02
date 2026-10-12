@@ -1,6 +1,40 @@
+name: Java CI with Gradle
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Bước 1: Kéo mã nguồn về runner
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Bước 2: Thiết lập môi trường JDK (chọn 17 hoặc 21 tùy theo dự án của bạn)
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      # Bước 3: Cấp quyền thực thi cho Gradle wrapper (RẤT QUAN TRỌNG khi chạy trên Linux runner)
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      # Bước 4: Chạy Unit Test (kế thừa từ Bài 1)
+      - name: Run tests with Gradle
+        run: ./gradlew test
+
+      # Bước 5: Đóng gói tệp JAR với Gradle (Bổ sung cho Bài 2)
       - name: Đóng gói tệp JAR với Gradle
         run: ./gradlew bootJar
 
+      # Bước 6: Lưu trữ thành phẩm JAR Artifact (Bổ sung cho Bài 2)
       - name: Lưu trữ thành phẩm JAR Artifact
         uses: actions/upload-artifact@v4
         with:
