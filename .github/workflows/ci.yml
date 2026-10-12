@@ -19,7 +19,7 @@ jobs:
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'temurin'
 
       # Bước 3: Cấp quyền thực thi cho Gradle wrapper (RẤT QUAN TRỌNG khi chạy trên Linux runner)
